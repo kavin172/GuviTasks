@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aadhar Card Design</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+    }
+    .aadhar-card {
+        width: 500px;
+        height: 300px;
+        margin: 20px auto;
+        background-color: #fff;
+        background-image: url('D:/SimpleTasks/Assignment_HTML/aadhar.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        border: 2px solid #000;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+    }
+    .photo {
+        flex: 0 0 auto;
+        margin-right: 20px;
+    }
+    .photo img {
+        width: 100px;
+        height: 120px;
+        border: 1px solid #000;
+        border-radius: 5px;
+    }
+    .details {
+        flex-grow: 1;
+        text-align: left;
+    }
+    .details p {
+        margin: 10px 0;
+        justify-content: center;
+    }
+    .qr-code {
+        flex: 0 0 auto;
+    }
+    .qr-code img {
+        width: 100px;
+        height: 100px;
+    }
+    .aadhar-card img {
+        width: 100px;
+        height: 100px;
+    }
+    .number h2{
+        padding-bottom: 0px ;
+    }
+    
+</style>
+</head>
+<body>
+
+    
+<div class="aadhar-card">
+    <div class="photo">
+        <img src="D:\SimpleTasks\Assignment_HTML\Aadhar_pic.png" alt="Your Photo">
+    </div>
+    <div class="details">
+        <p><strong>Name:</strong> Kavin</p>
+        <p><strong>Date of Birth:</strong> 23-07-1999</p>
+        <p><strong>Gender:</strong> Male</p>
+        <div class="number">
+            <h2>1234 5678 9012 </h2>
+        </div>
+    </div>
+    
+    <div class="qr-code">
+        <img src="D:\SimpleTasks\Assignment_HTML\Aadhar_QR.png" alt="QR Code">
+    </div>
+</div>
+
+</body>
+</html>

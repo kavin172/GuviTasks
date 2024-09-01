@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;  
+        }
+        .contact-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .contact-form h2 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .contact-form p1 {
+            color: red;
+        }
+        
+    </style>
+</head>
+<body>
+    <form class="contact-form">
+        <h2>Contact Us</h2>
+        <label for="name">Name<p1> *</p1></label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email<p1> *</p1></label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Phone<p1> *</p1></label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="subject">Subject<p1> *</p1></label>
+        <input type="text" id="subject" name="subject" required>
+
+        <label for="message">Message<p1> *</p1></label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        <label for="message" > <p1>* </p1>Required Fields</label>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
