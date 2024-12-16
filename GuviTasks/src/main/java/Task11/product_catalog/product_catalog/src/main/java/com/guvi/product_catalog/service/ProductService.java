@@ -12,7 +12,12 @@ public class ProductService {
 
     private ProductRepository productRepository;
 
-    public Product addProduct(Product product) {
+    public Product addProduct(String name, double price, String category) {
+        Product product = Product.builder()
+                .name(name)
+                .price(price)
+                .category(category)
+                .build();
         return productRepository.save(product);
     }
 

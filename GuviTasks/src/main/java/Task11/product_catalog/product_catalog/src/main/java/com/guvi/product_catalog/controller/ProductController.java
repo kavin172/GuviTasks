@@ -30,12 +30,7 @@ public class ProductController {
 
     @PostMapping("/add-product")
     public String addProduct(@RequestParam String name, @RequestParam Double price, @RequestParam String category) {
-        Product product = Product.builder()
-                .name(name)
-                .price(price)
-                .category(category)
-                .build();
-        productService.addProduct(product);
+        productService.addProduct(name, price, category);
         return "redirect:/";
     }
 
