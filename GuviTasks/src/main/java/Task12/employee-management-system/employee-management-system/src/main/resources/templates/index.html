@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        form, .search-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #e2e6ea;
+        }
+
+        /* Employee Details Section */
+        .employee-details {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Employee Management System</h1>
+
+    <!-- Form to Add Employee -->
+    <form action="/addEmployee" method="post">
+        <div class="form-group">
+            <label for="employeeId">Employee ID:</label>
+            <input type="text" id="employeeId" name="employeeId" required>
+        </div>
+        <div class="form-group">
+            <label for="employeeName">Employee Name:</label>
+            <input type="text" id="employeeName" name="employeeName" required>
+        </div>
+        <div class="form-group">
+            <label for="employeeEmail">Employee Email:</label>
+            <input type="email" id="employeeEmail" name="employeeEmail" required>
+        </div>
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+            <button type="submit">Add Employee</button>
+            <button type="button" onclick="window.location.href='/displayAll'">Display All Employees</button>
+            <button type="button" onclick="resetHomePage()">Reset Home Page</button>
+        </div>
+    </form>
+
+    <!-- Search Employee By ID -->
+    <div class="search-section">
+        <label for="searchId">Enter Employee ID to Search:</label>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="searchId" placeholder="Employee ID">
+            <button type="button" onclick="searchEmployeeById()">Search Employee</button>
+        </div>
+    </div>
+
+    <!-- Table to Display All Employees -->
+    <div th:if="${employees}">
+        <h2>Employee List</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Email</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.employeeId}"></td>
+                <td th:text="${employee.employeeName}"></td>
+                <td th:text="${employee.employeeEmail}"></td>
+                <td th:text="${employee.location}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Employee Details Display -->
+    <div id="employeeDetails" class="employee-details" style="display: none;">
+        <h3>Employee Details</h3>
+        <p><strong>Employee ID:</strong> <span id="detailsId"></span></p>
+        <p><strong>Employee Name:</strong> <span id="detailsName"></span></p>
+        <p><strong>Email:</strong> <span id="detailsEmail"></span></p>
+        <p><strong>Location:</strong> <span id="detailsLocation"></span></p>
+    </div>
+</div>
+
+<script>
+    // Function to Search Employee By ID
+    function searchEmployeeById() {
+        const employeeId = document.getElementById("searchId").value;
+
+        if (employeeId) {
+            fetch(`/display/${employeeId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Employee not found");
+                    return response.json();
+                })
+                .then(employee => {
+                    // Display the employee details
+                    document.getElementById("detailsId").innerText = employee.employeeId;
+                    document.getElementById("detailsName").innerText = employee.employeeName;
+                    document.getElementById("detailsEmail").innerText = employee.employeeEmail;
+                    document.getElementById("detailsLocation").innerText = employee.location;
+
+                    document.getElementById("employeeDetails").style.display = "block";
+                })
+                .catch(error => {
+                    alert(error.message);
+                    document.getElementById("employeeDetails").style.display = "none";
+                });
+        } else {
+            alert("Please enter a valid Employee ID.");
+        }
+    }
+
+    // Function to Reset the Home Page
+    function resetHomePage() {
+        window.location.reload(); // Reloads the current page
+    }
+</script>
+</body>
+</html>
